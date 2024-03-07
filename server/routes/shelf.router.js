@@ -8,7 +8,7 @@ const {
  * Get all of the items on the shelf
  */
 router.get('/',rejectUnauthenticated, (req, res) => {
-  res.sendStatus(200); // For testing only, can be removed
+  res.send([]); // For testing only, can be removed
 });
 
 /**

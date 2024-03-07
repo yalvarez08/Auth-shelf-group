@@ -24,8 +24,25 @@ function* fetchItems() {
       }
     }
 
+function* AddItemToShelf(action) {
+    console.log('added item payload:', action.payload)
+    try {
+        const config = {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        };
+    
+        yield axios.post('/api/shelf', config, action.payload);
+        yield put({ type: 'SET_ITEM', payload: action.payload});
+      } catch (error) {
+        console.log('POST /api/shelf request failed:', error);
+      }
+    }
+
 function* itemSaga() {
     yield takeLatest('FETCH_ITEMS', fetchItems);
+    yield takeLatest('ADD_ITEM', AddItemToShelf);
+
   }
 
 export default itemSaga;
