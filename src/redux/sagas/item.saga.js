@@ -32,10 +32,26 @@ function* AddItemToShelf(action) {
       }
     }
 
+function* DeleteFromShelf(action) {
+    console.log('deleted item payload:', action.payload)
+    try {
+        const config = {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        };
+        yield axios.delete('/api/shelf/:id', action.payload, config);
+        console.log('payload.id', action.payload);
+        yield put({type: 'FETCH_ITEMS'});
+        yield put({type: 'SET_ITEM', payload: action.payload});
+    } catch (error) {
+        console.log('DELETE /api/shelf item request failed:', error);
+    }
+}
+
 function* itemSaga() {
     yield takeLatest('FETCH_ITEMS', fetchItems);
     yield takeLatest('ADD_ITEM', AddItemToShelf);
-
+    yield takeLatest('DELETE_ITEM', DeleteFromShelf);
   }
 
 export default itemSaga;

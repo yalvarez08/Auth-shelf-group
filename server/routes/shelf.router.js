@@ -43,7 +43,21 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 /**
  * Delete an item if it's something the logged in user added
  */
-router.delete('/:id', (req, res) => {
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
+  // if (req.params.user_id === req.user.id){
+  
+console.log('we are here');
+  const queryText = `DELETE FROM "item" 
+                    WHERE id = $1;`;
+  console.log('req.params.id', req.params.id)
+  pool
+  .query(queryText, [req.params.id])
+    .then(result => {res.sendStatus(201)
+    }).catch((err) => {
+      console.log('Deleting item from shelf failed: ', err);
+      res.sendStatus(500);
+    }); 
+  // } else { res.sendStatus(401) }
   // endpoint functionality
 });
 

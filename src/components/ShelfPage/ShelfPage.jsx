@@ -25,12 +25,24 @@ function ShelfPage() {
         });
     };
 
+    const deleteItem = (evt) => {
+      evt.preventDefault();
+          dispatch({
+          type: 'DELETE_ITEM',
+          payload: {
+            description: description,
+            image_url: image_url,
+          },
+          });
+      };
+
     const renderShelfItems = () => {
       if (items.length > 0) {
         return(
           <>
           <ul>
-            {items.map(item => <li key={item.id}>{item.description} {item.image_url}</li>)}
+            {items.map(item => <li key={item.id}>{item.description} {item.image_url}
+            <button onClick={deleteItem}>Delete</button></li>)}
           </ul>
           </>
         )} else {
