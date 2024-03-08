@@ -25,14 +25,10 @@ function ShelfPage() {
         });
     };
 
-    const deleteItem = (evt) => {
-      evt.preventDefault();
+    const deleteItem = (id) => {
           dispatch({
           type: 'DELETE_ITEM',
-          payload: {
-            description: description,
-            image_url: image_url,
-          },
+          payload: id,
           });
       };
 
@@ -42,7 +38,7 @@ function ShelfPage() {
           <>
           <ul>
             {items.map(item => <li key={item.id}>{item.description} {item.image_url}
-            <button onClick={deleteItem}>Delete</button></li>)}
+            <button onClick={() => deleteItem(item.id)}>Delete</button></li>)}
           </ul>
           </>
         )} else {
