@@ -8,7 +8,16 @@ const {
  * Get all of the items on the shelf
  */
 router.get('/',rejectUnauthenticated, (req, res) => {
-  res.send([]); // For testing only, can be removed
+  console.log('req.user:', req.user);
+  console.log('/shelf GET route. Is user authenticated?:', req.isAuthenticated());
+  let queryText = `SELECT * FROM "item";`;
+  pool
+    .query(queryText) 
+    .then((results) => res.send(results.rows))
+    .catch((error) => {
+      console.log('Error getting items on shelf:', error);
+      res.sendStatus(500);
+    });
 });
 
 /**
