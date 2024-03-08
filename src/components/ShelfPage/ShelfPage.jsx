@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 function ShelfPage() {
 
   const [description, setDescription] = useState("");
-  const [imgUrl, setImgUrl] = useState("");
+  const [image_url, setImageUrl] = useState("");
   const dispatch = useDispatch();
   const items = useSelector(store => store.item);
 
@@ -20,25 +20,24 @@ function ShelfPage() {
         type: 'ADD_ITEM',
         payload: {
           description: description,
-          imgUrl: imgUrl,
+          image_url: image_url,
         },
         });
     };
 
-    // const renderShelfItems = () => {
-    //   if (items.length > 0) {
-    //     return(
-    //       <>
-    //       <ul>
-    //         {items.map((item, index) => <li key={index}>{item.description} {item.image_url}</li>)}
-    //       </ul>
-    //       </>
-    //     )} else {
-    //       return <h3>You currently have no items in this shelf.</h3>
-    //     }
-    // }
+    const renderShelfItems = () => {
+      if (items.length > 0) {
+        return(
+          <>
+          <ul>
+            {items.map(item => <li key={item.id}>{item.description} {item.image_url}</li>)}
+          </ul>
+          </>
+        )} else {
+          return <h3>You currently have no items in this shelf.</h3>
+        }
+    }
   
-
   return (
     <div className="container">
       <h2>Shelf</h2>
@@ -61,18 +60,15 @@ function ShelfPage() {
             type="text"
             name="img_url"
             required
-            value={imgUrl}
-            onChange={(event) => setImgUrl(event.target.value)}
+            value={image_url}
+            onChange={(event) => setImageUrl(event.target.value)}
           />
         </label>
         <div>
           <button className="btn" type="submit">Add Item</button>
         </div>
       </form>
-      {/* <p>All of the available items can be seen here.</p> */}
-      <ul>
-        {items.map(item => <li key={item.id}>{item.description} {item.image_url}</li>)}
-      </ul>
+      {renderShelfItems()}
   
     </div>
   );
